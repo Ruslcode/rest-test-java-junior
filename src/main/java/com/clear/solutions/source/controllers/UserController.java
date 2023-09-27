@@ -37,6 +37,9 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> searchUsers(@RequestParam LocalDate start,
                                                      @RequestParam LocalDate end) {
+        if (start.isAfter(end)) {
+            throw new InvalidDataException("date start is after date and !!!!");
+        }
         List<UserDTO> users = userService.searchUsers(start, end);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
